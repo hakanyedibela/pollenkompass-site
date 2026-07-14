@@ -1,0 +1,413 @@
+:root {
+  /* Instrument ink + bone. The colour ramp is the ePIN pollen-flight scale and
+     appears ONLY in the measurement strip and the skill dots — nowhere else. */
+  --ink: #0f1310;
+  --ink-raised: #161b17;
+  --hairline: #2a322c;
+  --bone: #edeae3;
+  --bone-dim: #9aa39c;
+
+  --display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+
+  --gutter: clamp(1.25rem, 5vw, 5rem);
+  --rule: 1px solid var(--hairline);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid #fceb00;
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+}
+.skip-link:focus {
+  left: var(--gutter);
+  top: 1rem;
+  z-index: 10;
+  padding: 0.5rem 0.75rem;
+  background: var(--bone);
+  color: var(--ink);
+}
+
+.shell {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---------- shared section furniture ---------- */
+
+.section {
+  padding-block: clamp(4rem, 9vw, 7.5rem);
+  border-top: var(--rule);
+}
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+  margin: 0 0 1.25rem;
+}
+
+.section-title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem;
+}
+
+.prose {
+  max-width: 46ch;
+}
+.prose p {
+  margin: 0 0 1rem;
+}
+
+/* ---------- hero ---------- */
+
+.hero {
+  padding-block: clamp(4.5rem, 12vw, 9rem) clamp(3rem, 6vw, 5rem);
+}
+
+.hero-name {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+  margin: 0 0 2rem;
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.hero-thesis {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 6.2vw, 4.75rem);
+  line-height: 1.03;
+  letter-spacing: -0.035em;
+  margin: 0 0 2rem;
+  max-width: 21ch;
+  text-wrap: balance;
+}
+.hero-thesis em {
+  font-style: normal;
+  color: #fceb00;
+}
+
+.hero-role {
+  color: var(--bone-dim);
+  max-width: 44ch;
+  margin: 0 0 3.5rem;
+}
+
+/* ---------- the signature: measurement strip ---------- */
+
+.strip {
+  border: var(--rule);
+  background: var(--ink-raised);
+}
+
+.strip-track {
+  position: relative;
+}
+
+.strip-scale {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  height: 3.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.strip-step {
+  border-right: var(--rule);
+}
+.strip-step:last-child {
+  border-right: 0;
+}
+
+.strip-marker {
+  position: absolute;
+  top: -0.45rem;
+  bottom: -0.45rem;
+  width: 2px;
+  background: var(--bone);
+  transition: left 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.strip-marker::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -3px;
+  width: 8px;
+  height: 8px;
+  background: var(--bone);
+  transform: rotate(45deg);
+}
+
+.strip-legend {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  border-top: var(--rule);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+}
+.strip-legend b {
+  color: var(--bone);
+  font-weight: 500;
+}
+
+/* ---------- work ---------- */
+
+.work-grid {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: start;
+}
+@media (max-width: 800px) {
+  .work-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.work-subtitle {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+  margin: 0 0 1.75rem;
+}
+
+.facts {
+  margin: 0;
+  border-top: var(--rule);
+}
+.facts div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: var(--rule);
+}
+.facts dt {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+}
+.facts dd {
+  margin: 0;
+  font-size: 0.95rem;
+  text-align: right;
+}
+
+/* ---------- skills ---------- */
+
+.skill-groups {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  margin-top: 3rem;
+}
+
+.skill-group h3 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5rem;
+}
+.skill-group > p {
+  color: var(--bone-dim);
+  font-size: 0.92rem;
+  margin: 0 0 1.75rem;
+  max-width: 34ch;
+}
+
+.skill {
+  border-top: var(--rule);
+  padding: 0.9rem 0;
+}
+.skill-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.skill-name {
+  font-size: 0.98rem;
+}
+.skill-note {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--bone-dim);
+  margin-top: 0.3rem;
+}
+
+.dots {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+}
+.dot.on {
+  border-color: transparent;
+}
+
+/* ---------- support ---------- */
+
+.support-grid {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2rem);
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  margin-top: 2.5rem;
+}
+
+.support-card {
+  border: var(--rule);
+  background: var(--ink-raised);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.support-card h3 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin: 0;
+}
+.support-card p {
+  margin: 0;
+  color: var(--bone-dim);
+  font-size: 0.92rem;
+}
+
+.support-cta {
+  margin-top: auto;
+  padding-top: 1.25rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  border-bottom: 1px solid var(--bone-dim);
+  padding-bottom: 2px;
+  transition: gap 180ms ease, border-color 180ms ease;
+}
+.support-cta:hover {
+  gap: 0.85rem;
+  border-color: #fceb00;
+}
+
+.support-note {
+  margin-top: 2rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--bone-dim);
+  max-width: 64ch;
+}
+
+/* ---------- footer ---------- */
+
+.footer {
+  border-top: var(--rule);
+  padding-block: 2.5rem 3.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--bone-dim);
+}
+.footer a {
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 2px;
+}
+.footer a:hover {
+  border-color: var(--bone);
+  color: var(--bone);
+}
+
+/* ---------- motion ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 700ms ease, transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.shown {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
