@@ -34,9 +34,10 @@ components to keep the site current.
 Both donation routes are free to run: GitHub Sponsors and Ko-fi take no cut of the donation
 itself (Ko-fi's payment processor still charges its normal transaction fee).
 
-**Do not link these from inside the iOS app or its App Store description.** Apple's Guideline
-3.1.1 requires in-app tips to go through In-App Purchase; an external donation link there is a
-rejection. On this website they are fine.
+Donations live **here only**. The iOS app ships free with no in-app purchases and no donation
+link — Apple's Guideline 3.1.1 requires in-app tips to go through In-App Purchase, and an
+external donation link inside the app (or in its App Store description) is a rejection. On this
+website they are fine.
 
 ## Deploy to GitHub Pages
 
