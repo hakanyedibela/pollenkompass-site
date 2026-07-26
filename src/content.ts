@@ -6,10 +6,6 @@
 
 export const LINKS = {
   github: "https://github.com/YOUR-GITHUB-HANDLE",
-  // TODO: replace once GitHub Sponsors is enabled (github.com/sponsors/accounts)
-  sponsors: "https://github.com/sponsors/YOUR-GITHUB-HANDLE",
-  // TODO: replace once your Ko-fi page exists (ko-fi.com/manage)
-  kofi: "https://ko-fi.com/YOUR-KOFI-HANDLE",
   email: "mailto:hakan.yedibela@googlemail.com",
 } as const;
 
@@ -80,27 +76,5 @@ export const WORK = {
     { label: "Platform", value: "iOS 17+, SwiftUI" },
     { label: "Tests", value: "270+, incl. a11y audits" },
     { label: "Price", value: "Free, no ads" },
-  ],
-} as const;
-
-export const SUPPORT = {
-  eyebrow: "Support the work",
-  title: "The apps are free. The time isn't.",
-  body: "Pollen is free, carries no ads, and collects nothing about you. It costs an Apple developer account and a lot of evenings. If it saved you one bad morning, you can put something in the jar. Entirely optional — nothing gets unlocked.",
-  options: [
-    {
-      id: "sponsors",
-      name: "GitHub Sponsors",
-      pitch: "Recurring or one-off. No platform cut — it arrives whole.",
-      cta: "Sponsor on GitHub",
-      href: LINKS.sponsors,
-    },
-    {
-      id: "kofi",
-      name: "Ko-fi",
-      pitch: "One-off, no account needed. Card or PayPal.",
-      cta: "Buy me a coffee",
-      href: LINKS.kofi,
-    },
   ],
 } as const;

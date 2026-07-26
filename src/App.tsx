@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { HERO, LINKS, SCALE, SKILL_GROUPS, SUPPORT, WORK, type Skill } from "./content";
+import { HERO, LINKS, SCALE, SKILL_GROUPS, WORK, type Skill } from "./content";
 
 /** Adds `.shown` once the element scrolls into view; no-ops under reduced motion. */
 function useReveal<T extends HTMLElement>() {
@@ -101,7 +101,6 @@ function SkillRow({ skill }: { skill: Skill }) {
 export default function App() {
   const workRef = useReveal<HTMLElement>();
   const skillsRef = useReveal<HTMLElement>();
-  const supportRef = useReveal<HTMLElement>();
 
   return (
     <>
@@ -174,39 +173,6 @@ export default function App() {
           </div>
         </section>
 
-        <section
-          className="shell section reveal"
-          ref={supportRef}
-          aria-labelledby="support-title"
-          id="support"
-        >
-          <p className="eyebrow">{SUPPORT.eyebrow}</p>
-          <h2 className="section-title" id="support-title">
-            {SUPPORT.title}
-          </h2>
-          <p className="prose">{SUPPORT.body}</p>
-          <div className="support-grid">
-            {SUPPORT.options.map((option) => (
-              <article className="support-card" key={option.id}>
-                <h3>{option.name}</h3>
-                <p>{option.pitch}</p>
-                <a
-                  className="support-cta"
-                  href={option.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {option.cta}
-                  <span aria-hidden="true">&rarr;</span>
-                </a>
-              </article>
-            ))}
-          </div>
-          <p className="support-note">
-            A tip is a thank-you, not a transaction: nothing unlocks, nothing is gated, no feature
-            waits behind a payment. It funds the developer account and the evenings.
-          </p>
-        </section>
       </main>
 
       <footer className="shell footer">

@@ -19,25 +19,12 @@ components to keep the site current.
 - `SKILL_GROUPS` — each skill has a `level` from **1 to 6** on the same scale the hero strip
   shows (1 = working knowledge, 6 = what people call you for). Deliberately not percentages.
 - `WORK` — the project case study and its facts table.
-- `SUPPORT` — the donation cards.
 
-## Before you publish: replace the placeholder links
+## Before you publish: replace the placeholder link
 
-`src/content.ts` → `LINKS` currently points at placeholders. Replace all three:
-
-| Key        | Where to get it                                                       |
-| ---------- | --------------------------------------------------------------------- |
-| `github`   | your profile URL                                                      |
-| `sponsors` | enable at <https://github.com/sponsors> — 0% platform fee, bank payout |
-| `kofi`     | create at <https://ko-fi.com> — 0% on donations, PayPal/Stripe payout  |
-
-Both donation routes are free to run: GitHub Sponsors and Ko-fi take no cut of the donation
-itself (Ko-fi's payment processor still charges its normal transaction fee).
-
-Donations live **here only**. The iOS app ships free with no in-app purchases and no donation
-link — Apple's Guideline 3.1.1 requires in-app tips to go through In-App Purchase, and an
-external donation link inside the app (or in its App Store description) is a rejection. On this
-website they are fine.
+`src/content.ts` → `LINKS.github` currently points at a placeholder profile URL — replace it
+with yours. The site and the iOS app are free, with no donations, no in-app purchases and no
+payment links anywhere.
 
 ## Deploy to GitHub Pages
 
