@@ -20,11 +20,18 @@ components to keep the site current.
   shows (1 = working knowledge, 6 = what people call you for). Deliberately not percentages.
 - `WORK` — the project case study and its facts table.
 
-## Before you publish: replace the placeholder link
+## Privacy policy page
 
-`src/content.ts` → `LINKS.github` currently points at a placeholder profile URL — replace it
-with yours. The site and the iOS app are free, with no donations, no in-app purchases and no
-payment links anywhere.
+`public/privacy/index.html` is the canonical privacy policy for the **Pollenkompass app on
+both stores** — enter its published URL in App Store Connect (Privacy Policy URL) and in the
+Google Play Console (Store presence → Privacy policy). It is a static, self-contained page
+(German authoritative + English translation) served at `<site>/privacy/`; the footer links to
+it. Keep it in sync with what the apps actually do — it currently covers: ePIN + DWD fetches,
+local-only settings and symptom diary, optional iCloud sync (iOS), manual backup export
+(Android), optional location, local notifications, no analytics/ads/accounts.
+
+The site and both apps are free, with no donations, no in-app purchases and no payment links
+anywhere.
 
 ## Deploy to GitHub Pages
 

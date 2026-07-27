@@ -185,6 +185,8 @@ export default function App() {
           </a>
           {" · "}
           <a href={LINKS.email}>Email</a>
+          {" · "}
+          <a href={LINKS.privacy}>Privacy</a>
         </span>
       </footer>
     </>

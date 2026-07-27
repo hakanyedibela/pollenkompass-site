@@ -5,8 +5,9 @@
  */
 
 export const LINKS = {
-  github: "https://github.com/YOUR-GITHUB-HANDLE",
+  github: "https://github.com/hakanyedibela",
   email: "mailto:hakan.yedibela@googlemail.com",
+  privacy: `${import.meta.env.BASE_URL}privacy/`,
 } as const;
 
 export const HERO = {
@@ -65,16 +66,17 @@ export const SKILL_GROUPS: SkillGroup[] = [
 
 export const WORK = {
   eyebrow: "Current work",
-  title: "Pollen",
-  subtitle: "An iOS allergy companion for Bavaria",
+  title: "Pollenkompass",
+  subtitle: "An allergy companion for Bavaria — iOS & Android",
   body: [
-    "Reads live pollen concentrations from the ePIN measurement network run by the Bavarian LGL, classifies them on the official six-level scale, and says what that means for the allergens you actually track.",
+    "Reads live pollen concentrations from the ePIN measurement network run by the Bavarian LGL, shows the DWD daily forecast for all 27 German regions, and says what that means for the allergens you actually track. Measured values and forecasts are never blended — every number is labeled with its source.",
     "The hard part isn't the happy path. It's the day the API answers 200 and the station has quietly stopped measuring. The app says so, names the date of the last real reading, and tells you when data comes back — instead of showing a confident zero.",
+    "A symptom diary with pollen snapshots, correlation views, alerts and home-screen widgets rounds it out. No account, no ads, no tracking — the diary stays on your device (and, on iOS, optionally in your private iCloud).",
   ],
   facts: [
-    { label: "Data source", value: "ePIN / LGL Bayern" },
-    { label: "Platform", value: "iOS 17+, SwiftUI" },
-    { label: "Tests", value: "270+, incl. a11y audits" },
-    { label: "Price", value: "Free, no ads" },
+    { label: "Data sources", value: "ePIN (measured) · DWD (forecast)" },
+    { label: "Platform", value: "iOS 17+ (SwiftUI) · Android (Compose)" },
+    { label: "Tests", value: "270+ per platform, incl. a11y audits" },
+    { label: "Price", value: "Free — no ads, no IAP" },
   ],
 } as const;
