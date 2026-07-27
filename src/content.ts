@@ -6,7 +6,7 @@
 
 export const LINKS = {
   github: "https://github.com/hakanyedibela",
-  email: "mailto:hakan.yedibela@googlemail.com",
+  email: "mailto:contact@hkn7b.dev",
   privacy: `${import.meta.env.BASE_URL}privacy/`,
 } as const;
 
