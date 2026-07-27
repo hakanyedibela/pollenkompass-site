@@ -134,6 +134,18 @@ a {
   color: inherit;
 }
 
+.work-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.work-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 22.5%; /* iOS squircle-ish */
+  flex-shrink: 0;
+}
+
 .hero-thesis {
   font-family: var(--display);
   font-weight: 700;

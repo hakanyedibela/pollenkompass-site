@@ -165,9 +165,12 @@ export default function App() {
           <p className="eyebrow">{t(WORK.eyebrow)}</p>
           <div className="work-grid">
             <div>
-              <h2 className="section-title" id="work-title">
-                {WORK.title}
-              </h2>
+              <div className="work-head">
+                <img className="work-icon" src={WORK.icon} alt={t(WORK.iconAlt)} />
+                <h2 className="section-title" id="work-title">
+                  {WORK.title}
+                </h2>
+              </div>
               <p className="work-subtitle">{t(WORK.subtitle)}</p>
               <div className="prose">
                 {WORK.body.map((paragraph) => (

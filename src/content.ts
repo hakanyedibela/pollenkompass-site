@@ -131,6 +131,11 @@ export const SKILL_GROUPS: SkillGroup[] = [
 export const WORK = {
   eyebrow: { de: "Aktuelles Projekt", en: "Current work" },
   title: "Pollenkompass",
+  icon: `${import.meta.env.BASE_URL}pollenkompass-icon.png`,
+  iconAlt: {
+    de: "Pollenkompass App-Icon: Kompassrose mit Pollenkorn",
+    en: "Pollenkompass app icon: compass rose with a pollen grain",
+  },
   subtitle: {
     de: "Ein Allergie-Begleiter für Deutschland — iOS & Android",
     en: "An allergy companion for Germany — iOS & Android",
