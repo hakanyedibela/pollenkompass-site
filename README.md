@@ -1,4 +1,4 @@
-# hakan-dev-site
+# pollenkompass-site
 
 Static personal site — React + TypeScript + Vite. No backend, no tracking.
 

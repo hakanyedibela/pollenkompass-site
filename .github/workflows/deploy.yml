@@ -24,7 +24,11 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # Project site at hakanyedibela.github.io/pollenkompass-site/ — remove
+      # BASE_PATH when switching to a custom domain or user site.
       - run: npm run build
+        env:
+          BASE_PATH: /pollenkompass-site/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
