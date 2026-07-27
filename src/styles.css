@@ -110,6 +110,28 @@ a {
   display: flex;
   gap: 1.25rem;
   flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.hero-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.lang-toggle {
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: var(--bone-dim);
+  background: none;
+  border: 1px solid var(--rule, currentColor);
+  padding: 0.15rem 0.6rem;
+  cursor: pointer;
+}
+.lang-toggle:hover,
+.lang-toggle:focus-visible {
+  color: inherit;
 }
 
 .hero-thesis {

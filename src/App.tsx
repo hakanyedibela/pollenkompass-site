@@ -1,5 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { HERO, LINKS, SCALE, SKILL_GROUPS, WORK, type Skill } from "./content";
+import {
+  HERO,
+  LINKS,
+  SCALE,
+  SKILL_GROUPS,
+  UI,
+  WORK,
+  type L,
+  type Lang,
+  type Skill,
+} from "./content";
 
 /** Adds `.shown` once the element scrolls into view; no-ops under reduced motion. */
 function useReveal<T extends HTMLElement>() {
@@ -27,12 +37,18 @@ function useReveal<T extends HTMLElement>() {
   return ref;
 }
 
+function initialLang(): Lang {
+  const stored = localStorage.getItem("lang");
+  if (stored === "de" || stored === "en") return stored;
+  return navigator.language.toLowerCase().startsWith("de") ? "de" : "en";
+}
+
 /**
  * The signature element: the six-step ePIN pollen-flight scale the app itself renders,
  * reused here as the site's unit of measure. The marker walks the scale the way a real
  * instrument's needle does — the page reads as a device, not a brochure.
  */
-function MeasurementStrip() {
+function MeasurementStrip({ lang }: { lang: Lang }) {
   const [step, setStep] = useState(3);
 
   useEffect(() => {
@@ -55,28 +71,31 @@ function MeasurementStrip() {
       <div className="strip-track">
         <ul className="strip-scale">
           {SCALE.map((level) => (
-            <li key={level.name} className="strip-step" style={{ background: level.hex }} />
+            <li key={level.name.en} className="strip-step" style={{ background: level.hex }} />
           ))}
         </ul>
         <div className="strip-marker" style={{ left }} aria-hidden="true" />
       </div>
       <figcaption className="strip-legend" id="strip-caption">
         <span>
-          Reading <b>{current.name}</b>
+          {UI.reading[lang]} <b>{current.name[lang]}</b>
         </span>
-        <span>ePIN pollen-flight scale &middot; six levels</span>
+        <span>{UI.stripLegend[lang]}</span>
       </figcaption>
     </figure>
   );
 }
 
 /** Level 1–6 on that same scale, so a claim of skill carries the same units as the data. */
-function SkillDots({ level, name }: { level: number; name: string }) {
+function SkillDots({ level, name, lang }: { level: number; name: string; lang: Lang }) {
+  const label = UI.skillLevelOf[lang]
+    .replace("%1", String(level))
+    .replace("%2", String(SCALE.length));
   return (
-    <span className="dots" role="img" aria-label={`${name}: level ${level} of ${SCALE.length}`}>
+    <span className="dots" role="img" aria-label={`${name}: ${label}`}>
       {SCALE.map((scaleLevel, i) => (
         <span
-          key={scaleLevel.name}
+          key={scaleLevel.name.en}
           className={`dot${i < level ? " on" : ""}`}
           style={i < level ? { background: scaleLevel.hex } : undefined}
           aria-hidden="true"
@@ -86,14 +105,14 @@ function SkillDots({ level, name }: { level: number; name: string }) {
   );
 }
 
-function SkillRow({ skill }: { skill: Skill }) {
+function SkillRow({ skill, lang }: { skill: Skill; lang: Lang }) {
   return (
     <li className="skill">
       <div className="skill-head">
         <span className="skill-name">{skill.name}</span>
-        <SkillDots level={skill.level} name={skill.name} />
+        <SkillDots level={skill.level} name={skill.name} lang={lang} />
       </div>
-      {skill.note && <span className="skill-note">{skill.note}</span>}
+      {skill.note && <span className="skill-note">{skill.note[lang]}</span>}
     </li>
   );
 }
@@ -101,48 +120,66 @@ function SkillRow({ skill }: { skill: Skill }) {
 export default function App() {
   const workRef = useReveal<HTMLElement>();
   const skillsRef = useReveal<HTMLElement>();
+  const [lang, setLang] = useState<Lang>(initialLang);
+
+  useEffect(() => {
+    localStorage.setItem("lang", lang);
+    document.documentElement.lang = lang;
+  }, [lang]);
+
+  const other: Lang = lang === "de" ? "en" : "de";
+  const t = (l: L) => l[lang];
 
   return (
     <>
       <a className="skip-link" href="#main">
-        Skip to content
+        {t(UI.skipLink)}
       </a>
 
       <header className="shell hero">
         <p className="hero-name">
           <span>{HERO.name}</span>
-          <span>{HERO.location}</span>
+          <span className="hero-meta">
+            <span>{t(HERO.location)}</span>
+            <button
+              type="button"
+              className="lang-toggle"
+              onClick={() => setLang(other)}
+              aria-label={t(UI.langToggleLabel)}
+            >
+              {other.toUpperCase()}
+            </button>
+          </span>
         </p>
         <h1 className="hero-thesis">
-          I build software that <em>reports the truth</em>.
+          {t(HERO.h1Pre)}
+          <em>{t(HERO.h1Em)}</em>
+          {t(HERO.h1Post)}
         </h1>
-        <p className="hero-role">
-          {HERO.role}. Measured data, honest states, and interfaces that admit when they
-          don&rsquo;t know &mdash; because a confident wrong answer is worse than no answer.
-        </p>
-        <MeasurementStrip />
+        <p className="hero-role">{t(HERO.role)}</p>
+        <MeasurementStrip lang={lang} />
       </header>
 
       <main id="main">
         <section className="shell section reveal" ref={workRef} aria-labelledby="work-title">
-          <p className="eyebrow">{WORK.eyebrow}</p>
+          <p className="eyebrow">{t(WORK.eyebrow)}</p>
           <div className="work-grid">
             <div>
               <h2 className="section-title" id="work-title">
                 {WORK.title}
               </h2>
-              <p className="work-subtitle">{WORK.subtitle}</p>
+              <p className="work-subtitle">{t(WORK.subtitle)}</p>
               <div className="prose">
                 {WORK.body.map((paragraph) => (
-                  <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+                  <p key={paragraph.en.slice(0, 24)}>{t(paragraph)}</p>
                 ))}
               </div>
             </div>
             <dl className="facts">
               {WORK.facts.map((fact) => (
-                <div key={fact.label}>
-                  <dt>{fact.label}</dt>
-                  <dd>{fact.value}</dd>
+                <div key={fact.label.en}>
+                  <dt>{t(fact.label)}</dt>
+                  <dd>{t(fact.value)}</dd>
                 </div>
               ))}
             </dl>
@@ -150,29 +187,25 @@ export default function App() {
         </section>
 
         <section className="shell section reveal" ref={skillsRef} aria-labelledby="skills-title">
-          <p className="eyebrow">What I work with</p>
+          <p className="eyebrow">{t(WORK.skillsEyebrow)}</p>
           <h2 className="section-title" id="skills-title">
-            Measured on the same scale as the data
+            {t(WORK.skillsTitle)}
           </h2>
-          <p className="prose">
-            Six levels, one meaning: level 1 is working knowledge, level 6 is what people call me
-            for. No percentages &mdash; nobody is 95% good at Swift.
-          </p>
+          <p className="prose">{t(WORK.skillsProse)}</p>
           <div className="skill-groups">
             {SKILL_GROUPS.map((group) => (
-              <article className="skill-group" key={group.title}>
-                <h3>{group.title}</h3>
-                <p>{group.blurb}</p>
+              <article className="skill-group" key={group.title.en}>
+                <h3>{t(group.title)}</h3>
+                <p>{t(group.blurb)}</p>
                 <ul className="skill-list">
                   {group.skills.map((skill) => (
-                    <SkillRow key={skill.name} skill={skill} />
+                    <SkillRow key={skill.name} skill={skill} lang={lang} />
                   ))}
                 </ul>
               </article>
             ))}
           </div>
         </section>
-
       </main>
 
       <footer className="shell footer">
@@ -184,9 +217,9 @@ export default function App() {
             GitHub
           </a>
           {" · "}
-          <a href={LINKS.email}>Email</a>
+          <a href={LINKS.email}>{t(UI.footerEmail)}</a>
           {" · "}
-          <a href={LINKS.privacy}>Privacy</a>
+          <a href={LINKS.privacy}>{t(UI.footerPrivacy)}</a>
         </span>
       </footer>
     </>
