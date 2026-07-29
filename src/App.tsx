@@ -10,6 +10,7 @@ import {
   type Lang,
   type Skill,
 } from "./content";
+import { useSmoothScroll } from "./useSmoothScroll";
 
 /** Adds `.shown` once the element scrolls into view; no-ops under reduced motion. */
 function useReveal<T extends HTMLElement>() {
@@ -37,10 +38,13 @@ function useReveal<T extends HTMLElement>() {
   return ref;
 }
 
+const LANGS: Lang[] = ["de", "en", "es", "ro"];
+
 function initialLang(): Lang {
   const stored = localStorage.getItem("lang");
-  if (stored === "de" || stored === "en") return stored;
-  return navigator.language.toLowerCase().startsWith("de") ? "de" : "en";
+  if (LANGS.includes(stored as Lang)) return stored as Lang;
+  const prefix = navigator.language.toLowerCase().slice(0, 2);
+  return LANGS.find((l) => l === prefix) ?? "en";
 }
 
 /**
@@ -118,6 +122,7 @@ function SkillRow({ skill, lang }: { skill: Skill; lang: Lang }) {
 }
 
 export default function App() {
+  useSmoothScroll();
   const workRef = useReveal<HTMLElement>();
   const skillsRef = useReveal<HTMLElement>();
   const [lang, setLang] = useState<Lang>(initialLang);
@@ -127,7 +132,6 @@ export default function App() {
     document.documentElement.lang = lang;
   }, [lang]);
 
-  const other: Lang = lang === "de" ? "en" : "de";
   const t = (l: L) => l[lang];
 
   return (
@@ -141,14 +145,20 @@ export default function App() {
           <span>{HERO.name}</span>
           <span className="hero-meta">
             <span>{t(HERO.location)}</span>
-            <button
-              type="button"
+            {/* A select, not a cycle button: four languages would make a Romanian speaker
+                press a toggle three times to reach their own. */}
+            <select
               className="lang-toggle"
-              onClick={() => setLang(other)}
+              value={lang}
+              onChange={(e) => setLang(e.target.value as Lang)}
               aria-label={t(UI.langToggleLabel)}
             >
-              {other.toUpperCase()}
-            </button>
+              {LANGS.map((l) => (
+                <option key={l} value={l}>
+                  {l.toUpperCase()}
+                </option>
+              ))}
+            </select>
           </span>
         </p>
         <h1 className="hero-thesis">

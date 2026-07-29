@@ -119,6 +119,9 @@ a {
   gap: 1.25rem;
 }
 
+/* Now a <select> rather than a <button>: it keeps the native dropdown arrow — the affordance
+   that says "more than two choices" — so only the chrome is normalised here. `color-scheme`
+   makes the popup follow the page's dark palette instead of rendering as a white list. */
 .lang-toggle {
   font: inherit;
   letter-spacing: inherit;
@@ -126,8 +129,10 @@ a {
   color: var(--bone-dim);
   background: none;
   border: 1px solid var(--rule, currentColor);
-  padding: 0.15rem 0.6rem;
+  padding: 0.15rem 0.4rem 0.15rem 0.6rem;
   cursor: pointer;
+  color-scheme: dark;
+  border-radius: 0;
 }
 .lang-toggle:hover,
 .lang-toggle:focus-visible {
