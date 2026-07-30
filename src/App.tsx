@@ -38,7 +38,7 @@ function useReveal<T extends HTMLElement>() {
   return ref;
 }
 
-const LANGS: Lang[] = ["de", "en", "es", "ro"];
+const LANGS: Lang[] = ["de", "en", "es", "ro", "tr"];
 
 function initialLang(): Lang {
   const stored = localStorage.getItem("lang");
@@ -145,8 +145,8 @@ export default function App() {
           <span>{HERO.name}</span>
           <span className="hero-meta">
             <span>{t(HERO.location)}</span>
-            {/* A select, not a cycle button: four languages would make a Romanian speaker
-                press a toggle three times to reach their own. */}
+            {/* A select, not a cycle button: five languages would make a Turkish speaker
+                press a toggle four times to reach their own. */}
             <select
               className="lang-toggle"
               value={lang}
