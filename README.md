@@ -27,8 +27,10 @@ both stores** — enter its published URL in App Store Connect (Privacy Policy U
 Google Play Console (Store presence → Privacy policy). It is a static, self-contained page
 (German authoritative + English translation) served at `<site>/privacy/`; the footer links to
 it. Keep it in sync with what the apps actually do — it currently covers: ePIN + DWD fetches,
-local-only settings and symptom diary, optional iCloud sync (iOS), manual backup export
-(Android), optional location, local notifications, no analytics/ads/accounts.
+local settings and symptom diary, optional iCloud sync (iOS), manual backup export plus
+system Android Backup of diary/alerts/settings to the user's Google account (Android — see
+`backup_rules.xml` and `data_extraction_rules.xml` in the Android repo for the allow-list),
+optional location, local notifications, no analytics/ads/accounts.
 
 The site and both apps are free, with no donations, no in-app purchases and no payment links
 anywhere.
