@@ -1,0 +1,37 @@
+# Apache config for the Strato docroot this site is uploaded into.
+#
+# It lives in public/, so Vite copies it verbatim into dist/ and it ships with every build —
+# there is nothing to install on the server by hand.
+#
+# Every directive is wrapped in <IfModule>: on shared hosting a directive from a module that
+# is not loaded takes the whole site down with a 500, and the page this serves is the privacy
+# policy registered in App Store Connect and the Play Console.
+
+AddDefaultCharset UTF-8
+
+<IfModule mod_headers.c>
+  # Vite content-hashes every file in assets/ (index-Dtm8SYZP.js and friends), so a URL there
+  # never changes meaning — cache it for a year. The two HTML files are NOT hashed: cache them
+  # and a returning visitor keeps an index.html pointing at bundles the last deploy deleted.
+  <FilesMatch "\.(js|css|woff2?|png|jpe?g|webp|svg|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# No SPA rewrite rules on purpose. The site has no client-side router; /privacy/ is a real
+# directory holding index.html, which DirectoryIndex already serves. A catch-all fallback here
+# would mask a genuinely missing page as the start page — the exact bug vite.config.ts's dev
+# middleware exists to prevent.
+<IfModule mod_dir.c>
+  DirectoryIndex index.html
+</IfModule>
+
+<IfModule mod_autoindex.c>
+  Options -Indexes
+</IfModule>

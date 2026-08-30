@@ -35,19 +35,39 @@ optional location, local notifications, no analytics/ads/accounts.
 The site and both apps are free, with no donations, no in-app purchases and no payment links
 anywhere.
 
-## Deploy to GitHub Pages
+## Deploy
 
-`.github/workflows/deploy.yml` builds and publishes `dist/` on every push to `main`.
+The site is uploaded to a Strato Apache docroot behind its own subdomain,
+**`pollenkompass.hkn7b.dev`**. There is no CI deploy: pushing to `main` changes nothing on the
+live site until you run the upload.
 
-1. Push this repo to GitHub.
-2. Repo → **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-3. Push to `main`. The workflow builds and deploys.
+```bash
+DEPLOY_TARGET='user@ssh.strato.de:/pollenkompass/' npm run deploy         # dry run, prints the plan
+DEPLOY_TARGET='user@ssh.strato.de:/pollenkompass/' npm run deploy -- --go # transfer
+```
 
-**Base path:** `vite.config.ts` reads `BASE_PATH`, falling back to `/`.
+`scripts/deploy.sh` builds first, refuses to run if `dist/index.html` or `dist/privacy/index.html`
+came out empty, and syncs in two passes: hashed assets first without `--delete`, then the HTML
+with `--delete`. That order means the live page never references a bundle that hasn't finished
+uploading, and stale bundles from earlier builds get pruned instead of piling up.
 
-- User site (`<user>.github.io`) or a custom domain → leave it as is.
-- Project site (`<user>.github.io/<repo>/`) → set `BASE_PATH: /<repo>/` as an env var on the
-  build step in the workflow, otherwise the CSS and JS 404.
+One-time server setup:
+
+1. Strato panel → create the subdomain, point it at its own docroot folder.
+2. Enable the free Let's Encrypt certificate **for that subdomain** — both stores expect an
+   `https://` privacy URL.
+3. Run the dry run, check the file list, then `--go`.
+
+`public/.htaccess` ships with the build (Vite copies `public/` verbatim), and sets the caching
+split the hashed filenames allow: a year for `assets/*`, `no-cache` for the two HTML files.
+
+**Base path** is `/` in `vite.config.ts` — correct for a site at the root of its own subdomain.
+It only needs changing if the site ever moves into a subdirectory.
+
+Previously this deployed to GitHub Pages via `.github/workflows/deploy.yml`. That put the repo
+name in the URL (`hakanyedibela.github.io/pollenkompass-site/privacy/`), which would break the
+store-registered link on a repo rename — the subdomain removes that. The workflow was deleted
+rather than left to fail on every push.
 
 ## Design notes
 

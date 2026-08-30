@@ -34,10 +34,11 @@ function serveStaticDirIndexes(): Plugin {
   }
 }
 
-// GitHub Pages serves a project site from /<repo>/, so assets need that base path.
-// Set BASE_PATH in CI (or edit the fallback). "/" is correct for a user site
-// (<user>.github.io) or a custom domain.
+// The site is served from the root of its own subdomain (pollenkompass.hkn7b.dev), so the
+// base path is "/". It was configurable via BASE_PATH while the target was a GitHub Pages
+// project site at /<repo>/ — that put the repo name inside the store-registered privacy URL,
+// which is exactly what the subdomain removes.
 export default defineConfig({
-  base: process.env.BASE_PATH ?? "/",
+  base: "/",
   plugins: [react(), serveStaticDirIndexes()],
 })
