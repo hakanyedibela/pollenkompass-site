@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   HERO,
+  IMPRINT_URL,
   LINKS,
   SCALE,
   SKILL_GROUPS,
@@ -235,6 +236,10 @@ export default function App() {
         </span>
         <span>
           <a href={LINKS.privacy}>{t(UI.footerPrivacy)}</a>
+          {" · "}
+          <a href={t(IMPRINT_URL)} rel="noopener">
+            {t(UI.footerImprint)}
+          </a>
         </span>
       </footer>
     </>

@@ -17,6 +17,19 @@ export const LINKS = {
   privacy: `${import.meta.env.BASE_URL}privacy/`,
 } as const;
 
+/**
+ * The imprint lives on hakanyedibela.de, which serves a German and an English version — the
+ * same two URLs the privacy policy already links. The three languages the header does not
+ * currently offer get the English one.
+ */
+export const IMPRINT_URL: L = {
+  de: "https://hakanyedibela.de/imprint",
+  en: "https://hakanyedibela.de/en/imprint",
+  es: "https://hakanyedibela.de/en/imprint",
+  ro: "https://hakanyedibela.de/en/imprint",
+  tr: "https://hakanyedibela.de/en/imprint",
+};
+
 export const UI = {
   skipLink: {
     de: "Zum Inhalt springen",
@@ -55,6 +68,15 @@ export const UI = {
     es: "Privacidad",
     ro: "Confidențialitate",
     tr: "Gizlilik",
+  },
+  // German law expects an imprint to be reachable in one step from any page; until this change
+  // it was only reachable from inside the privacy policy.
+  footerImprint: {
+    de: "Impressum",
+    en: "Imprint",
+    es: "Aviso legal",
+    ro: "Date de contact",
+    tr: "Künye",
   },
 } as const;
 
