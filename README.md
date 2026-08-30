@@ -37,37 +37,35 @@ anywhere.
 
 ## Deploy
 
-The site is uploaded to a Strato Apache docroot behind its own subdomain,
-**`pollenkompass.hkn7b.dev`**. There is no CI deploy: pushing to `main` changes nothing on the
-live site until you run the upload.
+GitHub Pages, on the custom domain **`pollenkompass.hkn7b.dev`**.
+`.github/workflows/deploy.yml` builds and publishes `dist/` on every push to `main`.
+
+One-time setup:
+
+1. Repo → **Settings → Pages → Source: GitHub Actions**. Without this the build succeeds and
+   `actions/configure-pages` fails.
+2. Same page → **Custom domain** → `pollenkompass.hkn7b.dev`. GitHub then issues a Let's Encrypt
+   certificate for that hostname; tick **Enforce HTTPS** once it unlocks.
+3. DNS: `CNAME pollenkompass → hakanyedibela.github.io.` and **remove any A record** for that
+   name — a leftover A record keeps sending visitors elsewhere and breaks domain verification.
+
+`public/CNAME` carries the domain into every build, so the setting survives a redeploy.
+
+**Base path** is `/` in `vite.config.ts` — correct for a custom domain at its own root. Do not
+set a base prefix: it would reappear inside the store-registered privacy URL.
+
+Why not the Strato box, which already serves the imprint: its certificates are Strato-managed
+Sectigo DV certs covering `<domain>` and `www.<domain>` only, so the subdomain had no cert and
+`https://` failed at the handshake. Pages issues and renews one for the exact hostname for
+free. The earlier rsync-to-Apache setup (`scripts/deploy.sh`, `public/.htaccess`) is in git
+history if that box is ever needed again.
+
+Verify a deploy:
 
 ```bash
-DEPLOY_TARGET='user@ssh.strato.de:/pollenkompass/' npm run deploy         # dry run, prints the plan
-DEPLOY_TARGET='user@ssh.strato.de:/pollenkompass/' npm run deploy -- --go # transfer
+curl -sI https://pollenkompass.hkn7b.dev/ | head -1                 # HTTP/2 200
+curl -s -o /dev/null -w '%{http_code}\n' https://pollenkompass.hkn7b.dev/privacy/
 ```
-
-`scripts/deploy.sh` builds first, refuses to run if `dist/index.html` or `dist/privacy/index.html`
-came out empty, and syncs in two passes: hashed assets first without `--delete`, then the HTML
-with `--delete`. That order means the live page never references a bundle that hasn't finished
-uploading, and stale bundles from earlier builds get pruned instead of piling up.
-
-One-time server setup:
-
-1. Strato panel → create the subdomain, point it at its own docroot folder.
-2. Enable the free Let's Encrypt certificate **for that subdomain** — both stores expect an
-   `https://` privacy URL.
-3. Run the dry run, check the file list, then `--go`.
-
-`public/.htaccess` ships with the build (Vite copies `public/` verbatim), and sets the caching
-split the hashed filenames allow: a year for `assets/*`, `no-cache` for the two HTML files.
-
-**Base path** is `/` in `vite.config.ts` — correct for a site at the root of its own subdomain.
-It only needs changing if the site ever moves into a subdirectory.
-
-Previously this deployed to GitHub Pages via `.github/workflows/deploy.yml`. That put the repo
-name in the URL (`hakanyedibela.github.io/pollenkompass-site/privacy/`), which would break the
-store-registered link on a repo rename — the subdomain removes that. The workflow was deleted
-rather than left to fail on every push.
 
 ## Design notes
 

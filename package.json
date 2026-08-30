@@ -8,8 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "check:pages": "node scripts/check-static-pages.mjs",
-    "deploy": "bash scripts/deploy.sh"
+    "check:pages": "node scripts/check-static-pages.mjs"
   },
   "dependencies": {
     "lenis": "^1.3.25",
