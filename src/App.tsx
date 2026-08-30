@@ -38,13 +38,21 @@ function useReveal<T extends HTMLElement>() {
   return ref;
 }
 
-const LANGS: Lang[] = ["de", "en", "es", "ro", "tr"];
+/**
+ * The languages the selector offers. `Lang` and every `L` still carry es/ro/tr, so the
+ * translations remain in `content.ts` — they are simply not reachable from the header.
+ *
+ * Detection is clamped to this list on purpose: a "tr" left in localStorage by an earlier
+ * visit, or a Spanish browser, would otherwise render a language the selector cannot show
+ * as its value and cannot switch away from.
+ */
+const OFFERED_LANGS: Lang[] = ["de", "en"];
 
 function initialLang(): Lang {
   const stored = localStorage.getItem("lang");
-  if (LANGS.includes(stored as Lang)) return stored as Lang;
+  if (OFFERED_LANGS.includes(stored as Lang)) return stored as Lang;
   const prefix = navigator.language.toLowerCase().slice(0, 2);
-  return LANGS.find((l) => l === prefix) ?? "en";
+  return OFFERED_LANGS.find((l) => l === prefix) ?? "en";
 }
 
 /**
@@ -145,15 +153,15 @@ export default function App() {
           <span>{HERO.name}</span>
           <span className="hero-meta">
             <span>{t(HERO.location)}</span>
-            {/* A select, not a cycle button: five languages would make a Turkish speaker
-                press a toggle four times to reach their own. */}
+            {/* Still a select rather than a two-way toggle: the offered list is data, and
+                the moment es/ro/tr are offered again a toggle would be the wrong control. */}
             <select
               className="lang-toggle"
               value={lang}
               onChange={(e) => setLang(e.target.value as Lang)}
               aria-label={t(UI.langToggleLabel)}
             >
-              {LANGS.map((l) => (
+              {OFFERED_LANGS.map((l) => (
                 <option key={l} value={l}>
                   {l.toUpperCase()}
                 </option>
@@ -226,12 +234,6 @@ export default function App() {
           &copy; {new Date().getFullYear()} {HERO.name}
         </span>
         <span>
-          <a href={LINKS.github} target="_blank" rel="noopener noreferrer">
-            GitHub
-          </a>
-          {" · "}
-          <a href={LINKS.email}>{t(UI.footerEmail)}</a>
-          {" · "}
           <a href={LINKS.privacy}>{t(UI.footerPrivacy)}</a>
         </span>
       </footer>

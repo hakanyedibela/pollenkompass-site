@@ -3,7 +3,9 @@
  * Every user-facing string carries all five languages: `{ de, en, es, ro, tr }`, resolved by the
  * language selector in the header (same Localized(de, en, es, ro, tr) philosophy as the
  * Pollenkompass apps — all five keys are required, so TypeScript enumerates every entry
- * instead of letting a missed one silently fall back to English). `level` values are 1–6 on
+ * instead of letting a missed one silently fall back to English). The header currently offers
+ * only de and en (`OFFERED_LANGS` in App.tsx); es/ro/tr stay translated here, ready to be
+ * switched back on by adding them to that list. `level` values are 1–6 on
  * the same six-step scale the hero strip shows (1 = working knowledge, 6 = what people call
  * me for).
  */
@@ -12,8 +14,6 @@ export type Lang = "de" | "en" | "es" | "ro" | "tr";
 export type L = { de: string; en: string; es: string; ro: string; tr: string };
 
 export const LINKS = {
-  github: "https://github.com/hakanyedibela",
-  email: "mailto:contact@hkn7b.dev",
   privacy: `${import.meta.env.BASE_URL}privacy/`,
 } as const;
 
@@ -25,8 +25,8 @@ export const UI = {
     ro: "Săriți la conținut",
     tr: "İçeriğe geç",
   },
-  // A selector, not a two-way toggle: cycling five languages would make a Turkish speaker
-  // press it four times, so the label names the action rather than the destination.
+  // The label names the action, not the destination, so it stays correct however many
+  // languages `OFFERED_LANGS` in App.tsx exposes.
   langToggleLabel: {
     de: "Sprache wählen",
     en: "Choose language",
@@ -56,7 +56,6 @@ export const UI = {
     ro: "Confidențialitate",
     tr: "Gizlilik",
   },
-  footerEmail: { de: "E-Mail", en: "Email", es: "Correo", ro: "E-mail", tr: "E-posta" },
 } as const;
 
 export const HERO = {
