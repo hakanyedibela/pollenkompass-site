@@ -23,12 +23,8 @@
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230f1310'/%3E%3Crect x='2' y='7' width='2' height='2' fill='%23298d31'/%3E%3Crect x='5' y='7' width='2' height='2' fill='%23fceb00'/%3E%3Crect x='8' y='7' width='2' height='2' fill='%23f2b01d'/%3E%3Crect x='11' y='7' width='3' height='2' fill='%23b5111c'/%3E%3C/svg%3E"
     />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    <!-- No font tags here on purpose. The three families are self-hosted and imported in
+         src/main.tsx, so the page contacts no third party and leaks no visitor IPs. -->
   </head>
   <body>
     <div id="root"></div>
